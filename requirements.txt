@@ -7,3 +7,6 @@ MarkupSafe==1.1.1
 Werkzeug==0.15.6
 Flask-WTF
 requests
+Flask-Migrate
+Flask-Script
+psycopg2

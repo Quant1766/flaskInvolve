@@ -23,20 +23,20 @@ csrf.init_app(app)
 #     # SECRET_KEY='...'
 # )
 
-@app.route('/piastrix/rub',methods=('POST',))
-def hello_world():
-    if request.method == "POST":
-
-        print(request.data)
-        # data = {
-        #     "amount": amount_,
-        #     "currency": currency_,
-        #     "payway": "payeer_rub",
-        #     "shop_id": shop_key,
-        #     "shop_order_id": shop_order_id,
-        #     "sign": l_h,
-        # }
-    return 'Hello World!'
+# @app.route('/piastrix/rub',methods=('POST',))
+# def hello_world():
+#     if request.method == "POST":
+#
+#         print(request.data)
+#         # data = {
+#         #     "amount": amount_,
+#         #     "currency": currency_,
+#         #     "payway": "payeer_rub",
+#         #     "shop_id": shop_key,
+#         #     "shop_order_id": shop_order_id,
+#         #     "sign": l_h,
+#         # }
+#     return 'Hello World!'
 
 @app.route("/",methods=('GET', 'POST'))
 @csrf.exempt
@@ -64,7 +64,7 @@ def pay_page():
 
             res = requests.post(url=usd_b_url,json=data)
             res_json = res.json()
-            url_resp = res_json["data"]["Bd7r4Ss6"]
+            url_resp = res_json["data"]["url"]
 
             return redirect(url_resp, code=302)
         elif currency == "643":
@@ -82,7 +82,7 @@ def pay_page():
             res = requests.post(url=usd_b_url,json=data)
 
             res_json = res.json()
-            url_resp = res_json["data"]["referer"]
+            url_resp = res_json["data"]["data"]["referer"]
 
             return redirect(url_resp, code=302)
 

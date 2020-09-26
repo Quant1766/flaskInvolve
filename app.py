@@ -7,7 +7,7 @@ csrf = CSRFProtect()
 # def create_app():
 app = Flask(__name__)
 app.config.update(
-    DEBUG=True,
+    DEBUG=False,
     WTF_CSRF_ENABLED=True,
     SECRET_KEY='9\x15\xf0\x1f\x9e*\xca\x10\xee\x92\x87\xec\xe2\xd3\x89\xb3NB\x8a\xab\xc5\x11\x9d&',
     TEMPLATES_AUTO_RELOAD=True,
@@ -23,9 +23,20 @@ csrf.init_app(app)
 #     # SECRET_KEY='...'
 # )
 
-# @app.route('/')
-# def hello_world():
-#     return 'Hello World!'
+@app.route('/piastrix/rub',methods=('POST',))
+def hello_world():
+    if request.method == "POST":
+
+        print(request.data)
+        # data = {
+        #     "amount": amount_,
+        #     "currency": currency_,
+        #     "payway": "payeer_rub",
+        #     "shop_id": shop_key,
+        #     "shop_order_id": shop_order_id,
+        #     "sign": l_h,
+        # }
+    return 'Hello World!'
 
 @app.route("/",methods=('GET', 'POST'))
 @csrf.exempt
@@ -53,10 +64,27 @@ def pay_page():
 
             res = requests.post(url=usd_b_url,json=data)
             res_json = res.json()
-            url_resp = res_json["data"]["url"]
+            url_resp = res_json["data"]["Bd7r4Ss6"]
 
             return redirect(url_resp, code=302)
+        elif currency == "643":
+            #usd bill
+            usd_b_url = "https://core.piastrix.com/invoice/create"
+            usd_b_ctype = "application/json"
+            data = {
+                "amount": amount,
+                "currency": currency,
+                "payway": "payeer_rub",
+                "shop_id": shop_id,
+                "shop_order_id": shop_order_id,
+                "sign": sign
+                }
+            res = requests.post(url=usd_b_url,json=data)
 
+            res_json = res.json()
+            url_resp = res_json["data"]["referer"]
+
+            return redirect(url_resp, code=302)
 
 
         return render_template('paypage1.html'), 200

@@ -7,6 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Flask Auth Example</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.2/css/bulma.min.css" />
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
 </head>
 
 <body>
@@ -178,6 +180,15 @@ var sha256 = function sha256(ascii) {
             shop_order_id = "101"
 
              l = currency_+":"+amount_+":"+currency_+":"+shop_key+":"+shop_order_id+skey
+        }else if(currency_==643){
+
+            document.getElementById('PayForm').action = "";
+            document.getElementById('shop_order_id').value = "101";
+            shop_order_id = "101"
+            //12.34:643:payeer_rub:5:4126SecretKey01
+             l = +amount_+":"+currency_+":payeer_rub:"+shop_key+":"+shop_order_id+skey
+
+
         }
 
 

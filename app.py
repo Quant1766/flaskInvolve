@@ -23,11 +23,11 @@ csrf.init_app(app)
 #     # SECRET_KEY='...'
 # )
 
-@app.route('/')
-def hello_world():
-    return 'Hello World!'
+# @app.route('/')
+# def hello_world():
+#     return 'Hello World!'
 
-@app.route("/pay/",methods=('GET', 'POST'))
+@app.route("/",methods=('GET', 'POST'))
 @csrf.exempt
 def pay_page():
     if request.method=="POST":
@@ -37,6 +37,7 @@ def pay_page():
         sign = str(request.form['sign'])
         shop_id = str(request.form['shop_id'])
         shop_order_id = str(request.form['shop_order_id'])
+
         if currency == "840":
             #usd bill
             usd_b_url = "https://core.piastrix.com/bill/create"

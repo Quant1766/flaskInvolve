@@ -1,6 +1,7 @@
-from flask import Flask,render_template
+from flask import Flask,render_template,request,redirect
 from flask_wtf.csrf import CSRFProtect
-
+import requests
+import hashlib
 csrf = CSRFProtect()
 
 # def create_app():
@@ -29,7 +30,38 @@ def hello_world():
 @app.route("/pay/",methods=('GET', 'POST'))
 @csrf.exempt
 def pay_page():
-    return render_template('paypage1.html'), 200
+    if request.method=="POST":
+        amount = str(request.form['amount'])
+        currency = str(request.form['currency'])
+        description = str(request.form['description'])
+        sign = str(request.form['sign'])
+        shop_id = str(request.form['shop_id'])
+        shop_order_id = str(request.form['shop_order_id'])
+        if currency == "840":
+            #usd bill
+            usd_b_url = "https://core.piastrix.com/bill/create"
+            usd_b_ctype = "application/json"
+            data = {
+                "payer_currency": currency,
+                 "shop_amount": amount,
+                 "shop_currency": currency,
+                 "shop_id": shop_id,
+                 "shop_order_id": shop_order_id,
+                 "sign": sign
+             }
+
+            res = requests.post(url=usd_b_url,json=data)
+            res_json = res.json()
+            url_resp = res_json["data"]["url"]
+
+            return redirect(url_resp, code=302)
+
+
+
+        return render_template('paypage1.html'), 200
+    else:
+
+        return render_template('paypage1.html'), 200
 
 
 if __name__ == '__main__':

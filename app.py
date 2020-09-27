@@ -18,7 +18,7 @@ csrf = CSRFProtect()
 app = Flask(__name__)
 app.config.update(
 
-    DEBUG=True,
+    DEBUG=False,
     WTF_CSRF_ENABLED=True,
     SECRET_KEY='9\x15\xf0\x1f\x9e*\xca\x10\xee\x92\x87\xec\xe2\xd3\x89\xb3NB\x8a\xab\xc5\x11\x9d&',
     TEMPLATES_AUTO_RELOAD=True,
